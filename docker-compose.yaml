@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  storage:
+    container_name: storage
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=celery_results
+    ports:
+      - 5432:5432
+  message-broker:
+    container_name: rabbit
+    image: rabbitmq
+    ports:
+      - 5672:5672
+  requester:
+    container_name: requester
+    privileged: true
+    build:
+      context: workers
+      args: 
+        BROKER: amqp://guest:guest@localhost:5672//
+        RESULT_BACKEND: db+postgresql://postgres:postgres@storage/mydatabase
+        NAME: requester
+    ports:
+      - 6379:6379
