@@ -15,14 +15,23 @@ services:
     image: rabbitmq
     ports:
       - 5672:5672
-  requester:
-    container_name: requester
+  scheduler:
     privileged: true
+    depends_on:
+      - "message-broker"
+      - "storage"
     build:
       context: workers
       args: 
-        BROKER: amqp://guest:guest@localhost:5672//
-        RESULT_BACKEND: db+postgresql://postgres:postgres@storage/mydatabase
+        NAME: scheduler
+    command: celery -A project.application beat -l DEBUG
+  requester:
+    privileged: false
+    depends_on:
+      # - "scheduler"
+      - "message-broker"
+      - "storage"
+    build:
+      context: workers
+      args: 
         NAME: requester
-    ports:
-      - 6379:6379
