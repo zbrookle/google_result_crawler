@@ -1,7 +1,5 @@
 FROM python:3.7
 
-ARG BROKER
-ARG RESULT_BACKEND
 ARG NAME
 
 RUN apt-get update 
@@ -20,6 +18,4 @@ RUN pip install celery \
     chromedriver-binary
 
 COPY project project
-# --result-backend ${RESULT_BACKEND}
-CMD celery -A project.application worker -n ${NAME}@%h
-# --loglevel=INFO
+CMD celery -A project.application worker -n ${NAME}@%h --loglevel=DEBUG
