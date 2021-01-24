@@ -23,7 +23,7 @@ def setup_periodic_tasks(sender, **kwargs):
         sender.add_periodic_task(10.0, chained_process.s(term))
 
 
-@app.task(bind=True, name='chained_process', track_started=True)
+@app.task(bind=True, name="chained_process", track_started=True)
 def chained_process(self, term: str):
     chain_sig = retrieve_search_page.s(term) | parse.s() | count_results.s()
     chain_sig()
