@@ -1,3 +1,3 @@
 start:
 	docker-compose build
-	docker-compose up --scale requester=5
+	docker-compose up --scale requester=3
