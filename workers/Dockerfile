@@ -18,8 +18,8 @@ RUN pip install celery \
     beautifulsoup4 \
     selenium==3.141.0 \
     chromedriver-binary==${PIP_CHROME_VERSION} \
-    kazoo
+    kazoo \
+    click
 
-COPY project project
-
-# ENTRYPOINT ["/project/entrypoint.sh"]
+COPY workers/project project
+COPY join_party.py join_party.py
