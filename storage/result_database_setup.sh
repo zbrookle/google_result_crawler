@@ -1,1 +1,1 @@
-nohup /usr/bin/python3 join_database_party.py "/celery/results_shards" $TASK_NAME &
+nohup /usr/bin/python3 zookeeper/join_party.py "/celery/results_shards" $TASK_NAME &

@@ -22,4 +22,4 @@ RUN pip install celery \
     click
 
 COPY workers/project project
-COPY join_party.py join_party.py
+COPY zookeeper zookeeper

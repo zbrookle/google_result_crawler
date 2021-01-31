@@ -7,4 +7,4 @@ RUN /usr/bin/pip3 install kazoo \
 
 COPY storage/result_database_setup.sh /docker-entrypoint-initdb.d/init-user-db.sh
 
-COPY join_party.py join_party.py
+COPY zookeeper zookeeper
