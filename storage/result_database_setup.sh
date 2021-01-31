@@ -1,0 +1,1 @@
+nohup /usr/bin/python3 join_database_party.py "/celery/results_shards" $TASK_NAME &
