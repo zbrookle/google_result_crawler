@@ -56,10 +56,21 @@ services:
     depends_on:
       - "scheduler"
     image: celery-worker
+    environment: 
+      TASK_NAME: '{{.Task.Name}}'
     user: "1"
-    command: ["/bin/sh", "/project/entrypoint.sh", '{{.Task.Name}}']
+    command: ["/bin/sh", "/project/entrypoint.sh"]
     deploy:
       replicas: 3
+  result-shard:
+    depends_on:
+      - scheduler
+    image: postgres-shard
+    environment: 
+      TASK_NAME: '{{.Task.Name}}'
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: process_results
   test:
     image: testing-proxy
     ports:
@@ -67,3 +78,4 @@ services:
         published: 80
     depends_on:
       - scheduler
+  
